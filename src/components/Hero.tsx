@@ -4,16 +4,23 @@ import aiNetworkBg from '@/assets/ai-network-bg.jpg';
 
 const Hero = () => {
   return (
-    <section 
-      className="ai-hero-bg min-h-screen flex items-center justify-center relative"
-      style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${aiNetworkBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
-      <div className="ai-network-lines"></div>
+    <>
+      {/* Fixed Background for entire page */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${aiNetworkBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="ai-network-lines"></div>
+      </div>
+      
+      {/* Hero Content */}
+      <section className="min-h-screen flex items-center justify-center relative z-10">
       
       <div className="ai-section text-center text-white relative z-10">
         <div className="ai-fade-in visible">
@@ -70,7 +77,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 };
 

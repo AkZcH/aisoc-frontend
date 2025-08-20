@@ -52,12 +52,12 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen relative z-10">
       <Navigation />
       <Hero />
       
       {/* Quick Highlights Carousel */}
-      <section className="py-20 bg-primary text-white">
+      <section className="py-20 bg-primary/95 backdrop-blur-sm text-white relative z-10">
         <div className="ai-section">
           <div className="text-center mb-16 ai-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -87,7 +87,7 @@ const Home = () => {
       </section>
 
       {/* Featured Projects */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-background/95 backdrop-blur-sm relative z-10">
         <div className="ai-section">
           <div className="text-center mb-16 ai-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -129,7 +129,7 @@ const Home = () => {
       </section>
 
       {/* Membership Preview */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-secondary/95 backdrop-blur-sm relative z-10">
         <div className="ai-section">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="ai-fade-in">
@@ -187,7 +187,7 @@ const Home = () => {
       </section>
 
       {/* Partners & Sponsors */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-background/95 backdrop-blur-sm relative z-10">
         <div className="ai-section">
           <div className="text-center mb-16 ai-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -209,7 +209,7 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary text-white py-16">
+      <footer className="bg-primary/95 backdrop-blur-sm text-white py-16 relative z-10">
         <div className="ai-section">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="ai-fade-in">
