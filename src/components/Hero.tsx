@@ -1,3 +1,4 @@
+
 import { ArrowRight, Users, Calendar, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import aiNetworkBg from '@/assets/ai-network-bg.jpg';
@@ -14,6 +15,7 @@ const Hero = () => {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed',
             transform: 'translateZ(0)', // Force hardware acceleration
             willChange: 'transform'
           }}
