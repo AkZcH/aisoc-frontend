@@ -5,18 +5,20 @@ import aiNetworkBg from '@/assets/ai-network-bg.jpg';
 const Hero = () => {
   return (
     <>
-      {/* Fixed Background for entire page */}
-      <div 
-        className="fixed inset-0 z-0"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${aiNetworkBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
-        }}
-      >
-        <div className="ai-network-lines"></div>
+      {/* Fixed Background Layer */}
+      <div className="fixed inset-0 w-full h-full z-0 overflow-hidden">
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${aiNetworkBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            transform: 'translateZ(0)', // Force hardware acceleration
+            willChange: 'transform'
+          }}
+        />
+        <div className="ai-network-lines absolute inset-0"></div>
       </div>
       
       {/* Hero Content */}
