@@ -1,3 +1,4 @@
+
 import { ArrowRight, Users, Calendar, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import aiNetworkBg from '@/assets/ai-network-bg.jpg';
@@ -5,18 +6,7 @@ import aisocLogo from '@/assets/AISOC Logo.png';
 
 const Hero = () => {
   return (
-    <>
-      {/* Fixed Background for entire page */}
-      <div 
-        className="ai-fixed-background"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${aiNetworkBg})`
-        }}
-      />
-      <div className="ai-fixed-network-lines" />
-      
-      {/* Hero Content */}
-      <section className="min-h-screen flex items-center justify-center relative z-10">
+    <section className="min-h-screen flex items-center justify-center relative z-10">
       
       <div className="ai-section text-center text-white relative z-10">
         <div className="ai-fade-in visible">
@@ -73,8 +63,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      </section>
-    </>
+    </section>
   );
 };
 
