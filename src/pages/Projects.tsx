@@ -1,344 +1,439 @@
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
-import { Github, ExternalLink, Users, Calendar, Award, Filter, Search } from 'lucide-react';
-import { useState } from 'react';
+import { Github, ExternalLink, Users, Calendar, Star, Filter } from 'lucide-react';
+import aisocTransparentLogo from '@/assets/AISOC_transparent.png';
 
-const Projects = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState('all');
+/**
+ * AI Society — Projects Page
+ * Theme: Black background, white text, purple gradient accents
+ * Stack: React + TailwindCSS
+ */
 
-  const ongoingProjects = [
-    {
-      id: 1,
-      title: 'AI-Powered Campus Assistant',
-      description: 'Intelligent chatbot helping students navigate university services, course registration, and academic resources using natural language processing and knowledge graphs.',
-      category: 'nlp',
-      technologies: ['Python', 'NLP', 'React', 'MongoDB', 'FastAPI'],
-      teamSize: 6,
-      startDate: '2024-01-15',
-      status: 'In Progress',
-      progress: 70,
-      github: 'https://github.com/ai-society/campus-assistant',
-      demo: 'https://campus-ai.demo.com',
-      lead: 'Sarah Chen',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      id: 2,
-      title: 'Sustainable Energy Predictor',
-      description: 'Machine learning model predicting renewable energy generation patterns for campus optimization using IoT sensors and weather data integration.',
-      category: 'ml',
-      technologies: ['TensorFlow', 'Python', 'IoT', 'Time Series Analysis', 'Docker'],
-      teamSize: 4,
-      startDate: '2023-11-20',
-      status: 'Testing',
-      progress: 85,
-      github: 'https://github.com/ai-society/energy-predictor',
-      demo: 'https://energy-predict.demo.com',
-      lead: 'Michael Rodriguez',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      id: 3,
-      title: 'Computer Vision Art Generator',
-      description: 'Neural network creating artistic interpretations of campus landmarks using generative adversarial networks and style transfer techniques.',
-      category: 'cv',
-      technologies: ['PyTorch', 'GANs', 'Computer Vision', 'Style Transfer', 'Flask'],
-      teamSize: 5,
-      startDate: '2024-02-01',
-      status: 'In Progress',
-      progress: 45,
-      github: 'https://github.com/ai-society/art-generator',
-      demo: null,
-      lead: 'Emily Zhang',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      id: 4,
-      title: 'Medical Image Analysis Tool',
-      description: 'Deep learning application for automated detection of anomalies in medical imaging, supporting radiologists in diagnostic processes.',
-      category: 'healthcare',
-      technologies: ['TensorFlow', 'Medical Imaging', 'CNN', 'Python', 'DICOM'],
-      teamSize: 7,
-      startDate: '2023-09-10',
-      status: 'Publication Ready',
-      progress: 95,
-      github: 'https://github.com/ai-society/medical-imaging',
-      demo: 'https://medical-ai.demo.com',
-      lead: 'David Kim',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      id: 5,
-      title: 'Smart Traffic Optimization',
-      description: 'AI system optimizing campus traffic flow using real-time data analysis and predictive modeling to reduce congestion and improve safety.',
-      category: 'optimization',
-      technologies: ['Reinforcement Learning', 'Python', 'OpenCV', 'Real-time Analytics'],
-      teamSize: 8,
-      startDate: '2024-01-05',
-      status: 'In Progress',
-      progress: 60,
-      github: 'https://github.com/ai-society/traffic-optimizer',
-      demo: null,
-      lead: 'Lisa Thompson',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      id: 6,
-      title: 'Language Learning Companion',
-      description: 'Personalized AI tutor for language learning using speech recognition, natural language generation, and adaptive learning algorithms.',
-      category: 'education',
-      technologies: ['Speech Recognition', 'NLP', 'Adaptive Learning', 'React Native'],
-      teamSize: 5,
-      startDate: '2023-12-01',
-      status: 'Beta Testing',
-      progress: 80,
-      github: 'https://github.com/ai-society/language-companion',
-      demo: 'https://lang-ai.demo.com',
-      lead: 'Alex Johnson',
-      image: '/api/placeholder/400/300'
-    }
-  ];
+// ────────────────────────────────────────────────────────────────────────────────
+// Utilities & Design Tokens
+// ────────────────────────────────────────────────────────────────────────────────
+const cx = (...c) => c.filter(Boolean).join(" ");
+const gText = "bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-300";
+const gBg = "bg-gradient-to-r from-purple-600 to-purple-400";
 
-  const completedProjects = [
-    {
-      title: 'Student Performance Predictor',
-      description: 'ML model predicting student success rates using academic and behavioral data.',
-      achievements: ['Published in IEEE Conference', 'Best Student Paper Award'],
-      technologies: ['Scikit-learn', 'Pandas', 'Jupyter'],
-      completedDate: '2023-12-15'
-    },
-    {
-      title: 'Automated Essay Scoring',
-      description: 'NLP system for automated evaluation of student essays with detailed feedback.',
-      achievements: ['Deployed in 3 courses', '95% accuracy rate'],
-      technologies: ['BERT', 'Transformers', 'Python'],
-      completedDate: '2023-10-20'
-    },
-    {
-      title: 'COVID-19 Spread Predictor',
-      description: 'Epidemiological model for predicting virus spread patterns on campus.',
-      achievements: ['Used by university administration', 'Featured in local news'],
-      technologies: ['SIR Models', 'Data Visualization', 'R'],
-      completedDate: '2023-08-10'
-    }
-  ];
+function GradientRule({ className = "mt-4" }) {
+  return <div className={cx("h-px w-full", gBg, className)} />;
+}
 
-  const filterOptions = [
-    { value: 'all', label: 'All Projects' },
-    { value: 'nlp', label: 'Natural Language Processing' },
-    { value: 'cv', label: 'Computer Vision' },
-    { value: 'ml', label: 'Machine Learning' },
-    { value: 'healthcare', label: 'Healthcare AI' },
-    { value: 'education', label: 'Educational AI' },
-    { value: 'optimization', label: 'Optimization' }
-  ];
+function SectionHeader({ id, title, subtitle, actions }) {
+  return (
+    <header id={id} className="mb-6">
+      <div className="flex items-end justify-between gap-4 flex-wrap">
+        <div>
+          <h2 className={cx("text-2xl md:text-3xl font-bold", gText)}>{title}</h2>
+          {subtitle && <p className="mt-2 text-white/70 max-w-3xl">{subtitle}</p>}
+        </div>
+        {actions}
+      </div>
+      <GradientRule />
+    </header>
+  );
+}
 
-  const filteredProjects = ongoingProjects.filter(project => {
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filter === 'all' || project.category === filter;
-    return matchesSearch && matchesFilter;
+function Card({ children, as: As = "div", emphasized = false, className = "" }) {
+  return (
+    <As
+      className={cx(
+        "relative group rounded-2xl p-5 bg-black/40 border border-white/10 backdrop-blur-sm",
+        emphasized
+          ? "shadow-[0_0_0_1px_rgba(255,255,255,0.12)]"
+          : "hover:-translate-y-1 transition-transform duration-300 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]",
+        className
+      )}
+    >
+      <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 [background:radial-gradient(60%_60%_at_50%_0%,rgba(168,85,247,0.18),transparent_60%)]" />
+      {children}
+    </As>
+  );
+}
+
+function Tag({ label, active = false, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className={cx(
+        "px-3 py-1 rounded-full text-xs border transition",
+        active
+          ? "border-white/30 text-white"
+          : "border-white/10 text-white/70 hover:text-white hover:border-white/30"
+      )}
+    >
+      {label}
+    </button>
+  );
+}
+
+// ────────────────────────────────────────────────────────────────────────────────
+// Data
+// ────────────────────────────────────────────────────────────────────────────────
+const featuredProjects = [
+  {
+    id: 1,
+    title: "AI-Powered Study Assistant",
+    description: "An intelligent tutoring system that helps students learn more effectively using natural language processing and adaptive learning algorithms.",
+    technologies: ["Python", "TensorFlow", "React", "FastAPI"],
+    category: "Education",
+    status: "Active",
+    contributors: 8,
+    stars: 124,
+    lastUpdated: "2024-03-10",
+    githubUrl: "#",
+    liveUrl: "#",
+    featured: true
+  },
+  {
+    id: 2,
+    title: "Computer Vision for Medical Imaging",
+    description: "Deep learning models for automated detection of anomalies in medical scans, helping radiologists make faster and more accurate diagnoses.",
+    technologies: ["PyTorch", "OpenCV", "Flask", "Docker"],
+    category: "Healthcare",
+    status: "Active",
+    contributors: 6,
+    stars: 89,
+    lastUpdated: "2024-03-08",
+    githubUrl: "#",
+    liveUrl: "#",
+    featured: true
+  }
+];
+
+const allProjects = [
+  {
+    id: 3,
+    title: "Smart Campus Navigation",
+    description: "AR-based navigation system for university campus using computer vision and GPS integration.",
+    technologies: ["Unity", "ARCore", "Python", "Firebase"],
+    category: "AR/VR",
+    status: "Active",
+    contributors: 5,
+    stars: 67,
+    lastUpdated: "2024-03-05",
+    githubUrl: "#",
+    liveUrl: "#"
+  },
+  {
+    id: 4,
+    title: "Sentiment Analysis Dashboard",
+    description: "Real-time sentiment analysis of social media posts with interactive visualization dashboard.",
+    technologies: ["React", "D3.js", "Node.js", "MongoDB"],
+    category: "NLP",
+    status: "Active",
+    contributors: 4,
+    stars: 45,
+    lastUpdated: "2024-03-03",
+    githubUrl: "#",
+    liveUrl: "#"
+  },
+  {
+    id: 5,
+    title: "Automated Code Review Bot",
+    description: "AI-powered bot that provides intelligent code review suggestions and detects potential bugs.",
+    technologies: ["Python", "GitHub API", "Machine Learning"],
+    category: "DevTools",
+    status: "Beta",
+    contributors: 3,
+    stars: 78,
+    lastUpdated: "2024-02-28",
+    githubUrl: "#",
+    liveUrl: null
+  },
+  {
+    id: 6,
+    title: "Voice-Controlled IoT System",
+    description: "Smart home automation system controlled through natural language voice commands.",
+    technologies: ["Raspberry Pi", "Python", "Speech Recognition"],
+    category: "IoT",
+    status: "Completed",
+    contributors: 7,
+    stars: 92,
+    lastUpdated: "2024-02-20",
+    githubUrl: "#",
+    liveUrl: "#"
+  }
+];
+
+const categories = ["All", "Education", "Healthcare", "AR/VR", "NLP", "DevTools", "IoT"];
+const statusOptions = ["All", "Active", "Beta", "Completed"];
+
+// ────────────────────────────────────────────────────────────────────────────────
+// Components
+// ────────────────────────────────────────────────────────────────────────────────
+function Hero() {
+  return (
+    <section className="relative overflow-hidden min-h-[80vh] flex items-center">
+      <div className="absolute inset-0 opacity-30 [background:radial-gradient(60%_60%_at_50%_20%,rgba(168,85,247,0.25),transparent_60%)]" />
+      <div className="mx-auto max-w-7xl px-4 py-12">
+        <div className="flex flex-col items-center text-center">
+          <div className="mb-6">
+            <img src={aisocTransparentLogo} alt="AISOC Logo" className="w-24 h-24 object-contain" />
+          </div>
+          <h1 className="text-3xl md:text-5xl font-bold">Student Projects</h1>
+          <p className="mt-3 max-w-2xl text-white/70">
+            Explore innovative AI projects built by our community members. From research prototypes to production applications.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a href="#featured" className="px-4 py-2 rounded-full border border-white/20">Featured Projects</a>
+            <a href="#all-projects" className="px-4 py-2 rounded-full border border-white/20">Browse All</a>
+            <a href="#contribute" className="px-4 py-2 rounded-full border border-white/20">Contribute</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeaturedProjectsSection() {
+  return (
+    <section id="featured" className="mt-12">
+      <SectionHeader
+        title="Featured Projects"
+        subtitle="Highlighting our most impactful and innovative student-led AI projects."
+      />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {featuredProjects.map((project) => (
+          <Card key={project.id} emphasized>
+            <div className="flex items-start justify-between mb-4">
+              <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+              <span className="px-2 py-1 bg-purple-600/20 text-purple-300 text-xs rounded-full border border-purple-500/30">
+                Featured
+              </span>
+            </div>
+
+            <p className="text-white/80 mb-4">{project.description}</p>
+
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.technologies.map((tech) => (
+                <span key={tech} className="px-2 py-1 bg-white/10 text-white/80 text-xs rounded-full border border-white/20">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-between text-sm text-white/70 mb-4">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center">
+                  <Users className="w-4 h-4 mr-1" />
+                  {project.contributors}
+                </div>
+                <div className="flex items-center">
+                  <Star className="w-4 h-4 mr-1" />
+                  {project.stars}
+                </div>
+                <div className="flex items-center">
+                  <Calendar className="w-4 h-4 mr-1" />
+                  {new Date(project.lastUpdated).toLocaleDateString()}
+                </div>
+              </div>
+              <span className={cx(
+                "px-2 py-1 text-xs rounded-full",
+                project.status === "Active" ? "bg-green-600/20 text-green-300 border border-green-500/30" :
+                project.status === "Beta" ? "bg-yellow-600/20 text-yellow-300 border border-yellow-500/30" :
+                "bg-blue-600/20 text-blue-300 border border-blue-500/30"
+              )}>
+                {project.status}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <a 
+                href={project.githubUrl}
+                className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
+              >
+                <Github className="w-4 h-4" />
+                Code
+              </a>
+              {project.liveUrl && (
+                <a 
+                  href={project.liveUrl}
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-black hover:bg-white/90 rounded-lg transition-colors"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Live Demo
+                </a>
+              )}
+            </div>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function AllProjectsSection() {
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
+
+  const filteredProjects = allProjects.filter(project => {
+    const matchesCategory = categoryFilter === "All" || project.category === categoryFilter;
+    const matchesStatus = statusFilter === "All" || project.status === statusFilter;
+    return matchesCategory && matchesStatus;
   });
 
-  const getStatusColor = (status: string) => {
-    const colors = {
-      'In Progress': 'bg-blue-100 text-blue-800',
-      'Testing': 'bg-yellow-100 text-yellow-800',
-      'Beta Testing': 'bg-orange-100 text-orange-800',
-      'Publication Ready': 'bg-green-100 text-green-800'
-    };
-    return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-800';
-  };
-
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Hero Section */}
-      <section className="pt-16 pb-12 bg-primary text-white">
-        <div className="ai-section text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 ai-fade-in">
-            Research & Projects
-          </h1>
-          <p className="text-xl text-white/80 max-w-3xl mx-auto ai-fade-in animation-delay-200">
-            Discover the innovative AI projects our community is building to solve real-world problems and advance the field of artificial intelligence.
-          </p>
-        </div>
-      </section>
-
-      {/* Search and Filter */}
-      <section className="py-12 bg-secondary">
-        <div className="ai-section">
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-            <div className="relative flex-1 max-w-lg ai-fade-in">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search projects..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-border bg-background text-foreground"
-              />
-            </div>
-            
-            <div className="flex items-center space-x-4 ai-fade-in animation-delay-200">
-              <Filter className="h-5 w-5 text-muted-foreground" />
+    <section id="all-projects" className="mt-12">
+      <SectionHeader
+        title="All Projects"
+        subtitle="Browse through our complete collection of student AI projects."
+        actions={
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-white/70" />
               <select 
-                value={filter} 
-                onChange={(e) => setFilter(e.target.value)}
-                className="bg-background border border-border rounded-lg px-4 py-3 text-foreground min-w-[200px]"
+                value={categoryFilter} 
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white backdrop-blur-sm"
               >
-                {filterOptions.map(option => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
+                {categories.map(category => (
+                  <option key={category} value={category} className="bg-black text-white">
+                    {category}
+                  </option>
+                ))}
+              </select>
+              <select 
+                value={statusFilter} 
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white backdrop-blur-sm"
+              >
+                {statusOptions.map(status => (
+                  <option key={status} value={status} className="bg-black text-white">
+                    {status}
                   </option>
                 ))}
               </select>
             </div>
           </div>
-        </div>
-      </section>
+        }
+      />
 
-      {/* Ongoing Projects */}
-      <section className="py-20">
-        <div className="ai-section">
-          <h2 className="text-4xl font-bold text-foreground mb-12 ai-fade-in">
-            Ongoing Projects ({filteredProjects.length})
-          </h2>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            {filteredProjects.map((project, index) => (
-              <div key={project.id} className="ai-card ai-hover-lift ai-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
-                <div className="flex justify-between items-start mb-4">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(project.status)}`}>
-                    {project.status}
-                  </span>
-                  <div className="flex space-x-2">
-                    <a href={project.github} className="text-primary hover:text-primary/80">
-                      <Github className="h-5 w-5" />
-                    </a>
-                    {project.demo && (
-                      <a href={project.demo} className="text-primary hover:text-primary/80">
-                        <ExternalLink className="h-5 w-5" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                <h3 className="text-xl font-semibold text-foreground mb-3">
-                  {project.title}
-                </h3>
-
-                <p className="text-muted-foreground mb-4">
-                  {project.description}
-                </p>
-
-                <div className="space-y-3 mb-4">
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Users className="w-4 h-4 mr-2" />
-                    Team Lead: {project.lead} • {project.teamSize} members
-                  </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Started: {new Date(project.startDate).toLocaleDateString()}
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <div className="flex justify-between text-sm text-muted-foreground mb-1">
-                    <span>Progress</span>
-                    <span>{project.progress}%</span>
-                  </div>
-                  <div className="w-full bg-secondary rounded-full h-2">
-                    <div 
-                      className="bg-primary h-2 rounded-full transition-all duration-300" 
-                      style={{ width: `${project.progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span key={techIndex} className="bg-primary/10 text-primary px-2 py-1 rounded text-sm font-medium">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {filteredProjects.length === 0 && (
-            <div className="text-center py-12">
-              <Search className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">No projects found</h3>
-              <p className="text-muted-foreground">Try adjusting your search or filter criteria.</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredProjects.map((project) => (
+          <Card key={project.id}>
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold text-white mb-2">{project.title}</h3>
+              <p className="text-white/80 text-sm">{project.description}</p>
             </div>
-          )}
-        </div>
-      </section>
 
-      {/* Completed Projects */}
-      <section className="py-20 bg-secondary">
-        <div className="ai-section">
-          <h2 className="text-4xl font-bold text-foreground text-center mb-12 ai-fade-in">
-            Completed Projects & Achievements
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {completedProjects.map((project, index) => (
-              <div key={index} className="ai-card ai-hover-lift ai-fade-in" style={{ animationDelay: `${index * 200}ms` }}>
-                <Award className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-3">{project.title}</h3>
-                <p className="text-muted-foreground mb-4">{project.description}</p>
-                
-                <div className="space-y-2 mb-4">
-                  {project.achievements.map((achievement, achIndex) => (
-                    <div key={achIndex} className="flex items-center text-sm text-primary">
-                      <Award className="w-3 h-3 mr-2" />
-                      {achievement}
-                    </div>
-                  ))}
+            <div className="flex flex-wrap gap-1 mb-4">
+              {project.technologies.slice(0, 3).map((tech) => (
+                <span key={tech} className="px-2 py-1 bg-white/10 text-white/70 text-xs rounded-full border border-white/10">
+                  {tech}
+                </span>
+              ))}
+              {project.technologies.length > 3 && (
+                <span className="px-2 py-1 text-white/60 text-xs">
+                  +{project.technologies.length - 3} more
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center justify-between text-xs text-white/60 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center">
+                  <Users className="w-3 h-3 mr-1" />
+                  {project.contributors}
                 </div>
-
-                <div className="flex flex-wrap gap-1 mb-3">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span key={techIndex} className="bg-primary/10 text-primary px-2 py-1 rounded text-xs">
-                      {tech}
-                    </span>
-                  ))}
+                <div className="flex items-center">
+                  <Star className="w-3 h-3 mr-1" />
+                  {project.stars}
                 </div>
-
-                <p className="text-xs text-muted-foreground">
-                  Completed: {new Date(project.completedDate).toLocaleDateString()}
-                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <span className={cx(
+                "px-2 py-1 rounded-full",
+                project.status === "Active" ? "bg-green-600/20 text-green-300" :
+                project.status === "Beta" ? "bg-yellow-600/20 text-yellow-300" :
+                "bg-blue-600/20 text-blue-300"
+              )}>
+                {project.status}
+              </span>
+            </div>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-primary text-white">
-        <div className="ai-section text-center">
-          <h2 className="text-4xl font-bold mb-6 ai-fade-in">
-            Have a Project Idea?
-          </h2>
-          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto ai-fade-in animation-delay-200">
-            Join our community and turn your AI ideas into reality. We provide mentorship, resources, and a collaborative environment to bring your projects to life.
+            <div className="flex items-center gap-2">
+              <a 
+                href={project.githubUrl}
+                className="flex items-center gap-1 px-3 py-2 bg-white/10 hover:bg-white/20 text-white text-xs rounded-lg transition-colors"
+              >
+                <Github className="w-3 h-3" />
+                Code
+              </a>
+              {project.liveUrl && (
+                <a 
+                  href={project.liveUrl}
+                  className="flex items-center gap-1 px-3 py-2 bg-white text-black hover:bg-white/90 text-xs rounded-lg transition-colors"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  Demo
+                </a>
+              )}
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      {filteredProjects.length === 0 && (
+        <div className="text-center py-12">
+          <Github className="h-16 w-16 text-white/70 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-white mb-2">No projects found</h3>
+          <p className="text-white/70">Try adjusting your filters or check back later for new projects.</p>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ContributeSection() {
+  return (
+    <section id="contribute" className="mt-12">
+      <Card emphasized>
+        <div className="text-center">
+          <h2 className={cx("text-2xl md:text-3xl font-bold mb-4", gText)}>Contribute to Our Projects</h2>
+          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+            Join our community of builders and contribute to exciting AI projects. Whether you're a beginner or expert, there's a place for you.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center ai-fade-in animation-delay-400">
-            <button className="ai-button-secondary bg-white text-primary hover:bg-white/90">
-              Submit Project Proposal
-            </button>
-            <button className="ai-button-secondary border-white text-white hover:bg-white hover:text-primary">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="#"
+              className="px-6 py-3 bg-white text-black hover:bg-white/90 rounded-lg font-medium transition-all duration-300"
+            >
+              Submit Your Project
+            </a>
+            <a 
+              href="#"
+              className="px-6 py-3 bg-transparent text-white border border-white/20 hover:bg-white hover:text-black rounded-lg font-medium transition-all duration-300"
+            >
               Join Existing Project
-            </button>
+            </a>
           </div>
         </div>
-      </section>
+      </Card>
+    </section>
+  );
+}
+
+// ────────────────────────────────────────────────────────────────────────────────
+// Main Page Export
+// ────────────────────────────────────────────────────────────────────────────────
+export default function ProjectsPage() {
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <Navigation />
+      <div className="pt-16">
+        <Hero />
+
+        <main className="mx-auto max-w-7xl px-4 pb-24">
+          <FeaturedProjectsSection />
+          <AllProjectsSection />
+          <ContributeSection />
+
+          <div className="mt-10 text-center">
+            <p className={gText}>"Innovation distinguishes between a leader and a follower."</p>
+          </div>
+        </main>
+      </div>
     </div>
   );
-};
-
-export default Projects;
+}

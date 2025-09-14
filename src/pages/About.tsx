@@ -3,7 +3,7 @@ import About from '@/components/About';
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black">
       <Navigation />
       <div className="pt-16">
         <About />

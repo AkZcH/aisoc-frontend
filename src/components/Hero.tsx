@@ -1,23 +1,19 @@
 import { ArrowRight, Users, Calendar, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import aiNetworkBg from '@/assets/ai-network-bg.jpg';
+import aisocLogo from '@/assets/AISOC Logo.png';
 
 const Hero = () => {
   return (
     <>
       {/* Fixed Background for entire page */}
       <div 
-        className="fixed inset-0 z-0"
+        className="ai-fixed-background"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${aiNetworkBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${aiNetworkBg})`
         }}
-      >
-        <div className="ai-network-lines"></div>
-      </div>
+      />
+      <div className="ai-fixed-network-lines" />
       
       {/* Hero Content */}
       <section className="min-h-screen flex items-center justify-center relative z-10">
@@ -25,15 +21,15 @@ const Hero = () => {
       <div className="ai-section text-center text-white relative z-10">
         <div className="ai-fade-in visible">
           {/* Large Circular Logo */}
-          <div className="ai-logo-circle-large mx-auto mb-8">
-            AI
+          <div className="w-32 h-32 mx-auto mb-8 rounded-full overflow-hidden bg-white/10 backdrop-blur border-4 border-white shadow-2xl flex items-center justify-center">
+            <img src={aisocLogo} alt="AISOC Logo" className="w-full h-full object-cover" />
           </div>
         </div>
 
         <div className="ai-fade-in visible animation-delay-200">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance">
             Where Intelligence Meets{' '}
-            <span className="ai-text-gradient">Innovation</span>
+            <span className="bg-gradient-to-r from-violet-200 to-violet-800 bg-clip-text text-transparent">Innovation</span>
           </h1>
         </div>
 
@@ -46,11 +42,11 @@ const Hero = () => {
 
         <div className="ai-fade-in visible animation-delay-600">
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link to="/membership" className="ai-button-primary group">
+            <Link to="/membership" className="ai-button-primary group border-2 border-white">
               Join Our Community
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              {/* <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" /> */}
             </Link>
-            <Link to="/events" className="ai-button-secondary">
+            <Link to="/events" className="bg-white text-black hover:bg-white/90 px-6 py-3 rounded-lg font-medium transition-all duration-300">
               Explore Events
             </Link>
           </div>

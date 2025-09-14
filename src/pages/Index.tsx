@@ -87,13 +87,13 @@ const Index = () => {
       </section>
 
       {/* Featured Projects */}
-      <section className="py-20 bg-background/95 backdrop-blur-sm relative z-10">
+      <section className="py-20 bg-black/80 backdrop-blur-sm relative z-10">
         <div className="ai-section">
           <div className="text-center mb-16 ai-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Featured Projects
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
               Discover the innovative AI projects our members are building to solve real-world problems.
             </p>
           </div>
@@ -107,8 +107,8 @@ const Index = () => {
                     <Github className="h-6 w-6" />
                   </a>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">{project.title}</h3>
-                <p className="text-muted-foreground mb-4">{project.description}</p>
+                <h3 className="text-xl font-semibold text-white mb-3">{project.title}</h3>
+                <p className="text-white/80 mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech, techIndex) => (
                     <span key={techIndex} className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
@@ -129,29 +129,29 @@ const Index = () => {
       </section>
 
       {/* Membership Preview */}
-      <section className="py-20 bg-secondary/95 backdrop-blur-sm relative z-10">
+      <section className="py-20 bg-black/30 backdrop-blur-sm relative z-10">
         <div className="ai-section">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="ai-fade-in">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 Join Our Community
               </h2>
-              <p className="text-xl text-muted-foreground mb-8">
+              <p className="text-xl text-white/80 mb-8">
                 Connect with like-minded students, access exclusive resources, and be part of 
                 cutting-edge AI research and development projects.
               </p>
               <div className="space-y-4 mb-8">
                 <div className="flex items-center space-x-4">
                   <Users className="h-6 w-6 text-primary" />
-                  <span className="text-foreground">Access to exclusive workshops and seminars</span>
+                  <span className="text-white">Access to exclusive workshops and seminars</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <BookOpen className="h-6 w-6 text-primary" />
-                  <span className="text-foreground">Mentorship from faculty and industry experts</span>
+                  <span className="text-white">Mentorship from faculty and industry experts</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <Award className="h-6 w-6 text-primary" />
-                  <span className="text-foreground">Opportunity to lead research projects</span>
+                  <span className="text-white">Opportunity to lead research projects</span>
                 </div>
               </div>
               <Link to="/membership" className="ai-button-primary">
@@ -162,23 +162,23 @@ const Index = () => {
               <div className="grid grid-cols-2 gap-6">
                 <div className="ai-card text-center">
                   <Users className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <div className="text-2xl font-bold text-foreground mb-2">500+</div>
-                  <div className="text-muted-foreground">Members</div>
+                  <div className="text-2xl font-bold text-white mb-2">500+</div>
+                  <div className="text-white/80">Members</div>
                 </div>
                 <div className="ai-card text-center">
                   <Calendar className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <div className="text-2xl font-bold text-foreground mb-2">50+</div>
-                  <div className="text-muted-foreground">Events</div>
+                  <div className="text-2xl font-bold text-white mb-2">50+</div>
+                  <div className="text-white/80">Events</div>
                 </div>
                 <div className="ai-card text-center">
                   <BookOpen className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <div className="text-2xl font-bold text-foreground mb-2">25+</div>
-                  <div className="text-muted-foreground">Projects</div>
+                  <div className="text-2xl font-bold text-white mb-2">25+</div>
+                  <div className="text-white/80">Projects</div>
                 </div>
                 <div className="ai-card text-center">
                   <Award className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <div className="text-2xl font-bold text-foreground mb-2">15+</div>
-                  <div className="text-muted-foreground">Awards</div>
+                  <div className="text-2xl font-bold text-white mb-2">15+</div>
+                  <div className="text-white/80">Awards</div>
                 </div>
               </div>
             </div>
@@ -187,13 +187,13 @@ const Index = () => {
       </section>
 
       {/* Partners & Sponsors */}
-      <section className="py-20 bg-background/95 backdrop-blur-sm relative z-10">
+      <section className="py-20 bg-black/80 backdrop-blur-sm relative z-10">
         <div className="ai-section">
           <div className="text-center mb-16 ai-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Our Partners
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
               We're proud to collaborate with leading technology companies and research institutions.
             </p>
           </div>
@@ -201,7 +201,7 @@ const Index = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center opacity-60">
             {partners.map((partner, index) => (
               <div key={index} className="ai-card text-center hover:opacity-100 transition-opacity ai-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
-                <div className="text-lg font-semibold text-foreground">{partner}</div>
+                <div className="text-lg font-semibold text-white">{partner}</div>
               </div>
             ))}
           </div>
